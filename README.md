@@ -1,7 +1,7 @@
 # FRAME Documentation
 
 Welcome to the FRAME documentation. This directory contains comprehensive documentation for the FRAME runtime system.
-
+*(Docs aren't fully up to date but does reflect most of the spine of FRAME)*
 ## What is FRAME?
 
 FRAME is a **local-first, deterministic runtime** for applications and agents. It executes user intents through a capability-constrained execution engine, producing cryptographically signed receipts that enable verifiable state reconstruction and integrity verification.
