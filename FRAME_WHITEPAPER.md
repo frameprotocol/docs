@@ -9,7 +9,7 @@
 
 ## Abstract
 
-FRAME is a sovereign, deterministic, local-first operating system and runtime that processes user intents through a capability-scoped execution kernel, producing cryptographically signed receipts that form an immutable chain. Every state transition is verifiable, replayable, and auditable. The system provides 37 frozen capabilities across 17 namespaces, enforced at the kernel level with deny-by-default semantics. State roots are computed as SHA-256 hashes over canonicalized system state, enabling cross-node verification. Identity is Ed25519-based with AES-256-GCM encrypted per-identity storage. Federation between peers uses a trusted-peer registry with strict mode enforcement in production. The user interface is entirely dynamic — rendered from dApp-produced widget schemas against declarative themes and layouts — with no hardcoded content. FRAME establishes a new paradigm for computing: one where every operation is provably correct, every state transition is cryptographically sealed, and sovereignty rests entirely with the user.
+FRAME is a sovereign, deterministic, local-first operating system and runtime that processes user intents through a capability-scoped execution kernel, producing cryptographically signed receipts that form an immutable chain. Every state transition is verifiable, replayable, and auditable. The system provides 37 frozen capabilities across 17 namespaces, enforced at the kernel level with deny-by-default semantics. State roots are computed as SHA-256 hashes over canonicalized system state, enabling cross-node verification. Identity is Ed25519-based with AES-256-GCM encrypted per-identity storage using authenticated encryption (AEAD). Federation between peers uses a trusted-peer registry with strict mode enforcement in production. The user interface is entirely dynamic — rendered from dApp-produced widget schemas against declarative themes and layouts — with no hardcoded content. FRAME establishes a new paradigm for computing: one where every operation is provably correct, every state transition is cryptographically sealed, and sovereignty rests entirely with the user.
 
 ---
 
@@ -252,7 +252,7 @@ If either fails, the kernel enters safe mode.
 
 ### 4.2 Canonical JSON Serialization
 
-Determinism requires identical serialization for identical data. FRAME implements canonical JSON in `ui/runtime/canonical.js`:
+Determinism requires identical serialization for identical data. FRAME implements a deterministic canonical JSON scheme rather than relying on external standards such as RFC 8785. The implementation resides in `ui/runtime/canonical.js`:
 
 ```
 function canonicalize(value):
@@ -421,7 +421,7 @@ If this hash differs from the expected value (`EXPECTED_CORE_HASH`), the kernel 
 
 ### 6.1 Capability Schema
 
-FRAME enforces a frozen taxonomy of 37 capabilities organized into 17 namespaces:
+FRAME enforces a frozen taxonomy of 37 capabilities organized across 17 namespaces:
 
 *See: [docs/assets/capability-model.mmd](assets/capability-model.mmd)*
 
