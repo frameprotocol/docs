@@ -1,0 +1,34 @@
+sequenceDiagram
+    participant U as User
+    participant K as Kernel (engine.js)
+    participant R as Router (router.js)
+    participant D as dApp (index.js)
+    participant SR as State Root
+    participant RL as Receipt Log (Tauri)
+    participant ID as Identity (Ed25519)
+
+    U->>K: handleIntent(input)
+    K->>K: kernelNormalize(input)
+    K->>K: validateIntent(intent)
+    K->>R: router.resolve(intent)
+    R-->>K: match {id, capabilities, run}
+    K->>K: checkIntegrityLock()
+    K->>K: verifyDAppCodeHash(match.id)
+    K->>SR: computeStateRoot(identity)
+    SR-->>K: previousStateRoot
+    K->>K: installDeterministicSandbox()
+    K->>K: buildScopedApi(dappId, capabilities)
+    K->>R: router.execute(match, intent, buildScopedApi)
+    R->>D: run(intent, ctx)
+    D-->>R: result {message, widgetSchema}
+    R-->>K: execResult
+    K->>K: restoreSandbox()
+    K->>SR: computeStateRoot(identity)
+    SR-->>K: nextStateRoot
+    K->>K: buildReceipt(opts)
+    K->>K: canonicalize(inputPayload)
+    K->>K: sha256(signable)
+    K->>ID: sign_data(receiptHash)
+    ID-->>K: signature (Ed25519)
+    K->>RL: receipt_append(receipt)
+    K-->>U: {result, receipt}

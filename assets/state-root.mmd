@@ -1,0 +1,37 @@
+graph TB
+    SR[State Root<br/>SHA-256]
+    V[version: 3]
+    CV[capabilityVersion: 3]
+    IPK[identityPublicKey<br/>Ed25519 hex]
+    DA[installedDApps<br/>sorted by id]
+    ST[storage<br/>sorted keys, excluded prefixes filtered]
+    RC[receiptChainCommitment<br/>rolling hash]
+
+    V --> CN[canonicalize]
+    CV --> CN
+    IPK --> CN
+    DA --> CN
+    ST --> CN
+    RC --> CN
+    CN --> JS[JSON.stringify]
+    JS --> SHA[SHA-256]
+    SHA --> SR
+
+    subgraph "Each dApp Entry"
+        DID[id]
+        DM[manifest<br/>canonicalized]
+        DCH[codeHash<br/>SHA-256 of index.js]
+    end
+
+    DA --> DID & DM & DCH
+
+    subgraph "Excluded Storage Prefixes"
+        E1[chain:]
+        E2[frame_integrity]
+        E3[frame_context_]
+        E4[frame_layout]
+        E5[frame_widgets]
+        E6[frame_capsules]
+        E7[frame_logs]
+        E8[frame_ui]
+    end

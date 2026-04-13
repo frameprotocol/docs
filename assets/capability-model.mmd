@@ -1,0 +1,43 @@
+graph TB
+    subgraph "Manifest Declaration"
+        M[manifest.json<br/>capabilities: [storage.read, storage.write]]
+    end
+
+    subgraph "Boot-Time Validation"
+        CS[CAPABILITY_SCHEMA<br/>37 frozen capabilities]
+        VC[validateCapabilities<br/>reject unknown caps]
+    end
+
+    subgraph "Runtime Enforcement"
+        CG[capabilityGuard<br/>deny-by-default]
+        SA[buildScopedApi<br/>only declared caps exposed]
+        CL[executionCapLog<br/>tracks used caps]
+    end
+
+    subgraph "Receipt Audit"
+        RD[capabilitiesDeclared]
+        RU[capabilitiesUsed]
+    end
+
+    M --> VC
+    VC --> CS
+    M --> SA
+    SA --> CG
+    CG --> CL
+    CL --> RU
+    M --> RD
+
+    subgraph "Write Capabilities (6)"
+        W1[storage.write]
+        W2[bridge.mint]
+        W3[bridge.burn]
+        W4[wallet.send]
+        W5[messages.send]
+        W6[contacts.import]
+    end
+
+    subgraph "Read/UI Capabilities (31)"
+        R1[storage.read, identity.read, ...]
+        R2[ai.*, context.*, ui.*]
+        R3[wallet.read, messages.list, ...]
+    end

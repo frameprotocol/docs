@@ -1,0 +1,130 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[margin=1in]{geometry}
+\usepackage{hyperref}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{fancyhdr}
+\usepackage{titlesec}
+\usepackage{tocloft}
+\usepackage{parskip}
+
+% Colors
+\definecolor{framegreen}{HTML}{00FF41}
+\definecolor{framebg}{HTML}{0A0A0A}
+\definecolor{codebg}{HTML}{1a1a2e}
+\definecolor{linkblue}{HTML}{4A90D9}
+
+\hypersetup{
+    colorlinks=true,
+    linkcolor=linkblue,
+    urlcolor=linkblue,
+    citecolor=linkblue,
+    pdftitle={FRAME: A Sovereign, Deterministic Operating System for Verifiable Computing},
+    pdfauthor={FRAME Protocol}
+}
+
+% Code listing style
+\lstset{
+    basicstyle=\ttfamily\small,
+    backgroundcolor=\color{codebg!10},
+    frame=single,
+    rulecolor=\color{gray!30},
+    breaklines=true,
+    breakatwhitespace=true,
+    tabsize=2,
+    showstringspaces=false,
+    keywordstyle=\color{blue},
+    commentstyle=\color{gray},
+    stringstyle=\color{red!70}
+}
+
+% Header/Footer
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small FRAME Whitepaper v2.2.0}
+\fancyhead[R]{\small\thepage}
+\fancyfoot[C]{\small FRAME Protocol — April 2026}
+
+\begin{document}
+
+% Title Page
+\begin{titlepage}
+\centering
+\vspace*{3cm}
+{\Huge\bfseries FRAME\par}
+\vspace{0.5cm}
+{\Large A Sovereign, Deterministic Operating System\\for Verifiable Computing\par}
+\vspace{2cm}
+{\large Version 2.2.0\par}
+\vspace{0.5cm}
+{\large April 13, 2026\par}
+\vspace{2cm}
+{\large FRAME Protocol\par}
+\vspace{1cm}
+{\small\url{https://github.com/frameprotocol/docs}\par}
+\vfill
+\end{titlepage}
+
+\tableofcontents
+\newpage
+
+% NOTE: The full content of this LaTeX document should be generated from
+% FRAME_WHITEPAPER.md using pandoc. This file provides the LaTeX preamble
+% and styling. To generate the complete PDF:
+%
+%   pandoc FRAME_WHITEPAPER.md -o FRAME_WHITEPAPER.pdf \
+%     --pdf-engine=xelatex \
+%     --include-in-header=frame_header.tex \
+%     -V geometry:margin=1in \
+%     -V fontsize=11pt \
+%     --toc \
+%     --number-sections
+%
+% Or compile this .tex file after inserting the pandoc-converted body.
+
+\section*{Conversion Instructions}
+
+This \LaTeX{} file provides the document preamble, styling, and title page for the FRAME whitepaper. To generate the complete PDF:
+
+\subsection*{Option 1: Pandoc (Recommended)}
+\begin{lstlisting}[language=bash]
+# Install pandoc and a LaTeX distribution
+sudo pacman -S pandoc texlive-core  # Arch Linux
+# or: sudo apt install pandoc texlive-xetex  # Ubuntu/Debian
+
+# Generate PDF from Markdown
+pandoc FRAME_WHITEPAPER.md -o FRAME_WHITEPAPER.pdf \
+  --pdf-engine=xelatex \
+  -V geometry:margin=1in \
+  -V fontsize=11pt \
+  --toc \
+  --number-sections \
+  --highlight-style=tango
+\end{lstlisting}
+
+\subsection*{Option 2: Full LaTeX Compilation}
+\begin{lstlisting}[language=bash]
+# Convert Markdown body to LaTeX
+pandoc FRAME_WHITEPAPER.md -o body.tex --no-highlight
+
+# Insert body.tex content into this file (replacing this section)
+# Then compile:
+xelatex FRAME_WHITEPAPER.tex
+xelatex FRAME_WHITEPAPER.tex  # Run twice for TOC
+\end{lstlisting}
+
+\subsection*{Option 3: Web-Based}
+\begin{lstlisting}[language=bash]
+# Use a Markdown-to-PDF service or VS Code extension:
+# - Markdown PDF (VS Code extension)
+# - md-to-pdf (npm package)
+npx md-to-pdf FRAME_WHITEPAPER.md
+\end{lstlisting}
+
+\end{document}

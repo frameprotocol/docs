@@ -1,0 +1,35 @@
+graph TB
+    subgraph "Intent Processing"
+        II[User Intent] --> AI[AI Parse Intent]
+        AI --> K[Kernel handleIntent]
+        K --> R[Router resolve]
+        R --> DA[dApp run]
+    end
+
+    subgraph "Widget Schema Generation"
+        DA --> WS[widgetSchema<br/>type: ui.plan]
+        WS --> W1[Widget 1<br/>type, title, region]
+        WS --> W2[Widget 2<br/>type, title, region]
+        WS --> WN[Widget N<br/>type, title, region]
+    end
+
+    subgraph "Shell Rendering"
+        W1 & W2 & WN --> WM[Widget Manager<br/>createWidget]
+        WM --> WR[Widget Renderer<br/>ES Module]
+        WR --> HD[Header]
+        WR --> SB[Sidebar]
+        WR --> WK[Workspace]
+        WR --> DK[Dock]
+        WR --> DR[Dynamic Regions]
+        WR --> ST[Status Bar]
+    end
+
+    subgraph "Theme Application"
+        TH[Theme JSON] --> CSS[CSS Custom Properties]
+        CSS --> HD & SB & WK & DK & DR & ST
+    end
+
+    subgraph "Layout Application"
+        LY[Layout JSON] --> LE[Layout Engine]
+        LE --> HD & SB & WK & DK & DR & ST
+    end

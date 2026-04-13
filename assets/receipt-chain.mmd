@@ -1,0 +1,12 @@
+graph LR
+    G[GENESIS] --> R1
+    R1[Receipt 1<br/>receiptHash: h1<br/>prevReceiptHash: null<br/>prevStateRoot: s0<br/>nextStateRoot: s1<br/>signature: σ1] --> R2
+    R2[Receipt 2<br/>receiptHash: h2<br/>prevReceiptHash: h1<br/>prevStateRoot: s1<br/>nextStateRoot: s2<br/>signature: σ2] --> R3
+    R3[Receipt 3<br/>receiptHash: h3<br/>prevReceiptHash: h2<br/>prevStateRoot: s2<br/>nextStateRoot: s3<br/>signature: σ3] --> RN
+    RN[Receipt N<br/>receiptHash: hN<br/>prevReceiptHash: h(N-1)<br/>prevStateRoot: s(N-1)<br/>nextStateRoot: sN<br/>signature: σN]
+
+    style G fill:#333,stroke:#666,color:#fff
+    style R1 fill:#1a1a2e,stroke:#00ff41,color:#00ff41
+    style R2 fill:#1a1a2e,stroke:#00ff41,color:#00ff41
+    style R3 fill:#1a1a2e,stroke:#00ff41,color:#00ff41
+    style RN fill:#1a1a2e,stroke:#00ff41,color:#00ff41

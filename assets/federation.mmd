@@ -1,0 +1,22 @@
+sequenceDiagram
+    participant PA as Peer A
+    participant TP as Trusted Peer Registry
+    participant PB as Peer B
+    participant VC as Verification
+
+    PB->>PA: requestReceiptSync(peerB_id)
+    PA->>TP: isTrustedPeer(peerB_id)
+    alt Strict Mode ON + Untrusted
+        TP-->>PA: false
+        PA-->>PB: REJECTED (untrusted)
+    else Trusted or Strict Mode OFF
+        TP-->>PA: true
+        PA->>PA: getReceiptChain()
+        PA-->>PB: receiptChain[]
+        PB->>VC: verifySignatures(chain)
+        VC->>VC: Ed25519.verify(receiptHash, signature, publicKey)
+        VC->>VC: verifyChainLinks(prevReceiptHash)
+        VC->>VC: verifyStateRoots(prevStateRoot, nextStateRoot)
+        VC-->>PB: verified: true
+        PB->>PB: importReceiptChain(chain)
+    end

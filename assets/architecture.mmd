@@ -1,0 +1,56 @@
+graph TB
+    subgraph "User Layer"
+        UI[Intent Input Bar]
+        WR[Widget Renderer]
+        TH[Theme Manager]
+        LM[Layout Manager]
+    end
+
+    subgraph "Runtime Layer"
+        K[Kernel<br/>engine.js]
+        R[Router<br/>router.js]
+        SR[State Root<br/>stateRoot.js]
+        RP[Replay<br/>replay.js]
+        FD[Federation<br/>federation.js]
+        SN[Snapshot<br/>snapshot.js]
+        CN[Canonical<br/>canonical.js]
+        IV[Invariants<br/>invariants.js]
+        EB[Event Bus<br/>eventBus.js]
+    end
+
+    subgraph "dApp Layer"
+        D1[wallet]
+        D2[notes]
+        D3[messages]
+        D4[timer]
+        DN[34 dApps...]
+    end
+
+    subgraph "System Layer"
+        AI[AI Runtime]
+        AG[Agent Engine]
+        CP[Capsule Executor]
+        CR[Capability Registry]
+        WM[Widget Manager]
+        DI[dApp Installer]
+    end
+
+    subgraph "Backend Layer (Rust/Tauri)"
+        ID[Identity<br/>Ed25519 + AES-256-GCM]
+        ST[Encrypted Storage<br/>Per-Identity]
+        RL[Receipt Log<br/>Append-Only]
+        LH[LLM Host]
+    end
+
+    UI --> K
+    K --> R
+    R --> D1 & D2 & D3 & D4 & DN
+    K --> SR
+    K --> CN
+    K --> EB
+    D1 & D2 & D3 & D4 & DN --> WR
+    K --> ID & ST & RL
+    FD --> K
+    IV --> K
+    SN --> SR
+    RP --> K
