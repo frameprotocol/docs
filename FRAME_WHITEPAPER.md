@@ -3,7 +3,7 @@
 **Version:** 2.2.0
 **Date:** April 13, 2026
 **Author:** FRAME Protocol
-**Repository:** https://github.com/nicholasgasior/frame
+**Repository:** https://github.com/frameprotocol/docs
 
 ---
 
